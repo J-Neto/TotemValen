@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _authToken() async {
     Map<String, dynamic> data = {
       "login": "00000000001",
-      "senha": "Valen@123",
+      "senha": "12345678",
       "scope": "toten_pdv, toten_pdv_patio_1"
     };
 
@@ -274,13 +274,13 @@ class _HomePageState extends State<HomePage> {
   //método scan
   Future<void> scanBarCode() async {
     try {
-      final scanResult = await FlutterBarcodeScanner.scanBarcode(
-        "#ff6666",
-        "Cancelar",
-        false,
-        ScanMode.BARCODE,
-      );
-      // scanResult = "037691180539";
+      // final scanResult = await FlutterBarcodeScanner.scanBarcode(
+      //   "#ff6666",
+      //   "Cancelar",
+      //   false,
+      //   ScanMode.BARCODE,
+      // );
+      scanResult = "0376839372";
       // scanResult = "037691840400";
       if (scanResult != '-1') {
         ScanResult.setResult(scanResult);

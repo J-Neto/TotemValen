@@ -6,13 +6,9 @@ import 'package:intl/intl.dart';
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
 
-
   @override
   State<ScanPage> createState() => _ScanPageState();
-
 }
-
-
 
 class _ScanPageState extends State<ScanPage> {
   String? scanResult;
@@ -43,7 +39,8 @@ class _ScanPageState extends State<ScanPage> {
                   ),
                 ),
                 child: Center(
-                  child: Text(tdata,
+                  child: Text(
+                    tdata,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -57,37 +54,34 @@ class _ScanPageState extends State<ScanPage> {
                 height: 350,
                 width: 900,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     TextButton(
                       onPressed: scanBarCode,
-                      child: Text('Aproxime o ticket da leitora',
+                      child: Text(
+                        'Aproxime o ticket da leitora',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.bold,
                             color: Color(0xFF1A2EA1),
-                            fontSize: 32
-                        ),),
+                            fontSize: 32),
+                      ),
                     ),
-                    Text(
-                      scanResult == null
-                          ?'Escaneie o código de barras'
-                          : 'Código do scanner é $scanResult'
-                    ),
+                    Text(scanResult == null
+                        ? 'Escaneie o código de barras'
+                        : 'Código do scanner é $scanResult'),
                     CircularProgressIndicator(),
                     SizedBox(
                       height: 100,
                       width: 850,
-                      child: ElevatedButton (
+                      child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              primary: Colors.white
-                          ),
+                              primary: Colors.white),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -96,18 +90,20 @@ class _ScanPageState extends State<ScanPage> {
                             width: 890,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [
-                                      Color(0xFFFF875E),
-                                      Color(0xFFFA6900)
-                                      //add more colors
-                                    ]),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xFFFF875E),
+                                  Color(0xFFFA6900)
+                                  //add more colors
+                                ]),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: const Center(child: Text('Cancelar', style: TextStyle(fontSize: 30),)),
+                              child: const Center(
+                                  child: Text(
+                                'Cancelar',
+                                style: TextStyle(fontSize: 30),
+                              )),
                             ),
-                          )
-                      ),
+                          )),
                     ),
                   ],
                 ),
@@ -123,7 +119,8 @@ class _ScanPageState extends State<ScanPage> {
                   ),
                 ),
                 child: Center(
-                  child: Text(tdata,
+                  child: Text(
+                    tdata,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -136,7 +133,6 @@ class _ScanPageState extends State<ScanPage> {
             ],
           ),
         ),
-
       ),
     );
   }
@@ -152,10 +148,8 @@ class _ScanPageState extends State<ScanPage> {
       );
     } on PlatformException {
       scanResult = 'Não foi possível a leitura';
+    }
+    if (!mounted) return;
+    setState(() => this.scanResult = scanResult);
   }
-  if (!mounted) return;
-  setState(() => this.scanResult = scanResult);
-
-  }
-
 }

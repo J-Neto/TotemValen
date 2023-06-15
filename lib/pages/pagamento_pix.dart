@@ -36,8 +36,8 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
   String description = "";
   String tollId = "4b2ec3f976a54740a0185a362210753b";
 
-  // String externalId = "816a6a5a42124f7880c2853";
-  String externalId = generateRandomString(23);
+  String externalId = "11111111111111111111112";
+  // String externalId = generateRandomString(23);
 
   Future<QrcodeStruct>? _futureQrcode; // se precisar clicar em algum button
   String qrCodebase64 = "";
@@ -78,7 +78,7 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
       },
       body: jsonEncode(<String, dynamic>{
         "externalId": externalId,
-        "amount": 1,
+        "amount": 2,
         // "amount": ValorConverter.convertValorFinal(ConsultaResponse.valorTotal),
         "description": ConsultaResponse.descricaoFinal
       }),
@@ -105,9 +105,8 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
   }
 
   Future<void> setupPusher() async {
-    print("aaaaaa");
-    String api_key = "ec6160c11a4ead432237";
-    String api_cluster = "sa1";
+    String api_key = "57bd798a42e64cc8d0ee";
+    String api_cluster = "us2";
 
     PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
     try {
@@ -117,7 +116,7 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
         onEvent: onEvent,
       );
 
-      await pusher.subscribe(channelName: 'pagamento-pix');
+      await pusher.subscribe(channelName: 'channel-diselbank-pix-confirmar-pagamento-webhook');
       await pusher.connect();
     } catch (e) {
       print("ERROR: $e");
