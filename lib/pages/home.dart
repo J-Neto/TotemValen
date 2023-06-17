@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,11 +77,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _authToken() async {
+
+    // *********************************************************
+    // ISSO AQUI É PRA TESTAR DIRETAMENTE NO TOTEM
+    // String login = "";
+    // String senha = "";
+    // String scope = "";
+    //
+    // try {
+    //   final file = File('path/to/your/file.txt');
+    //   final contents = await file.readAsString();
+    //
+    //   final data = jsonDecode(contents);
+    //   login = data['login'];
+    //   senha = data['senha'];
+    //   scope = data['scope'];
+    //
+    // } catch (err) {
+    //   print('Failed to read the file: $err');
+    // }
+    //
+    // Map<String, dynamic> data = {
+    //   "login": login,
+    //   "senha": senha,
+    //   "scope": scope
+    // };
+    // *********************************************************
+
+    // Somente isto será comentado ao testar a leitura de txt no totem --------------
     Map<String, dynamic> data = {
       "login": "00000000001",
       "senha": "12345678",
       "scope": "toten_pdv, toten_pdv_patio_1"
     };
+    // ------------------------------------------
 
     String body = json.encode(data);
 
