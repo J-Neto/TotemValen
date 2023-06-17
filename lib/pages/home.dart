@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
           pago = true;
         });
       } else {
+        print(map);
         setState(() {
           pago = false;
           ConsultaResponse.setTicket(map['dados']['ticket']['ticketNumero']);

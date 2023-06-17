@@ -56,7 +56,11 @@ class _ResumoSemConvenioPageState extends State<ResumoSemConvenioPage> {
         if (map['dados']['tarifas'].length > 0) {
           for (dynamic tarifa in map['dados']['tarifas']) {
             String descricao = tarifa['descricao'];
-            double valor = double.parse(tarifa['valor']);
+            String stringValor = tarifa['valor'];
+            stringValor = stringValor.replaceAll(',', '');
+            double valor = double.parse(stringValor);
+            print(valor);
+            // double valor = double.parse(tarifa['valor']);
             Tarifa novaTarifa = Tarifa(descricao: descricao, valor: valor);
             tarifas.add(novaTarifa);
             tarifaTotal.valor += valor;
@@ -387,23 +391,7 @@ class _ResumoSemConvenioPageState extends State<ResumoSemConvenioPage> {
                                     (15 / proportion).roundToDouble()),
                               ),
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PagamentoPixPage(),
-                                    ),
-                                  );
-                                  //** QUANDO TIVER IMPLEMENTADO DÉBITO E CRÉDITO
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         PagamentoSelectPage(),
-                                  //   ),
-                                  // );
-                                },
+                                onPressed: liberarSaida,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
                                   disabledForegroundColor: Colors.transparent,
@@ -477,5 +465,97 @@ class _ResumoSemConvenioPageState extends State<ResumoSemConvenioPage> {
         SnackBar(content: Text('Não foi possível ler o código de barras')),
       );
     }
+  }
+
+  Future<void> liberarSaida() async {
+    final authToken = AuthToken().token;
+
+    // // Aguardando a URL de Lucas...
+    // final url = Uri.parse(
+    //     'https://qas.sgpi.valenlog.com.br/api/v1/pdv/caixas/ticket/baixa/convenio');
+    // final request = http.MultipartRequest('POST', url);
+    // request.fields['ticket'] = ConsultaResponse.ticket;
+    // request.fields['convenio_id'] = ConsultaResponse.convenio_id;
+    // request.fields['motorista_cpf'] = StoreCpf.cpf!;
+    //
+    // // request.headers.addAll({'Authorization': 'Bearer $authToken'});
+    // request.headers.addAll({'Authorization': 'Bearer $authToken'});
+    // var resposta = await request.send();
+    // final respStr = await resposta.stream.bytesToString();
+    //
+    // Map<String, dynamic> map = jsonDecode(respStr);
+    //
+    // if (resposta.statusCode == 200) {
+    //   FaturadoResponse.setPatio(map["dados"][0]["dados"]["patio"]);
+    //   FaturadoResponse.setAtendente(map["dados"][0]["dados"]["atendente"]);
+    //   FaturadoResponse.setPlaca(map["dados"][0]["dados"]["placa"]);
+    //   FaturadoResponse.setEntrada(map["dados"][0]["dados"]["data_entrada"]);
+    //   FaturadoResponse.setPagamento(map["dados"][0]["dados"]["data_pagamento"]);
+    //   FaturadoResponse.setPermanencia(map["dados"][0]["dados"]["permancia"]);
+    //   FaturadoResponse.setSaidaPermitida(
+    //       map["dados"][0]["dados"]["data_saida"]);
+    //   FaturadoResponse.setDescricao(
+    //       map["dados"][0]["dados"]["detalhes"]["convenio"]);
+    //   FaturadoResponse.setMotorista(
+    //       map["dados"][0]["dados"]["detalhes"]["motorista"]);
+    //   FaturadoResponse.setDinheiro(map["dados"][0]["dados"]["valor_original"]);
+    //   FaturadoResponse.setValorReceber(
+    //       map["dados"][0]["dados"]["valor_original"]);
+    //   FaturadoResponse.setTotalPago(map["dados"][0]["dados"]["totalPago"]);
+    //   FaturadoResponse.setTroco(map["dados"][0]["dados"]["troco"]);
+    //
+    //   if (mounted) {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => PagamentoOKPage(),
+    //       ),
+    //     );
+    //   }
+    // } else if (resposta.statusCode == 400) {
+    //   if (map['codigo'] == 3004) {
+    //     if (mounted) {
+    //       showModalCPFIncompativelPlaca(context);
+    //     }
+    //
+    //     await Future.delayed(
+    //       const Duration(seconds: 2),
+    //     );
+    //
+    //     if (mounted) {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => CpfInsertPage(),
+    //         ),
+    //       );
+    //     }
+    //   }
+    // } else {
+    //   if (mounted) {
+    //     showModalTransacaoNaoAutorizada(context);
+    //   }
+    //
+    //   await Future.delayed(
+    //     const Duration(seconds: 2),
+    //   );
+    //
+    //   if (mounted) {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => HomePage(),
+    //       ),
+    //     );
+    //   }
+    // }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PagamentoPixPage(),
+      ),
+    );
+
   }
 }

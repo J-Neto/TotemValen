@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:totenvalen/model/consulta_response.dart';
+import 'package:totenvalen/pages/pagamento_ok_sem_convenio.dart';
 import 'package:totenvalen/qrcode/QRCode.dart';
 import 'package:totenvalen/qrcode/QrcodeStruct.dart';
 import 'package:totenvalen/util/generate_random_string.dart';
-import 'package:web_socket_channel/io.dart';
 import '../model/authToken.dart';
 import '../model/scan_result.dart';
 import '../widgets/cancel_button_item.dart';
@@ -36,8 +36,7 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
   String description = "";
   String tollId = "4b2ec3f976a54740a0185a362210753b";
 
-  String externalId = "11111111111111111111112";
-  // String externalId = generateRandomString(23);
+  String externalId = generateRandomString(23);
 
   Future<QrcodeStruct>? _futureQrcode; // se precisar clicar em algum button
   String qrCodebase64 = "";
@@ -102,6 +101,7 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
     _carregarDados();
     _createQrCodeBase64(externalId, tarifa, description);
     setupPusher();
+    print(externalId);
   }
 
   Future<void> setupPusher() async {
@@ -124,10 +124,31 @@ class _PagamentoPixPageState extends State<PagamentoPixPage> {
   }
 
   void onEvent(PusherEvent event) {
-    print("------------------------------------------");
-    print("INÍCIO DO EVENTO");
-    print("onEvent: $event");
-    print("FIM DO EVENTO");
+    // print("------------------------------------------");
+    // print("INÍCIO DO EVENTO");
+    // print("onEvent: $event");
+    // print("FIM DO EVENTO");
+
+    // Se o length > 0, então o usuário tentou fazer o pagamento
+    if(event.data.length > 0) {
+      var dadosEvento = jsonDecode(event.data);
+
+      // Checando se foi o pagamento deste totem em específico
+      if(dadosEvento["dados"]["external-id"] == externalId && dadosEvento["dados"]["status"] == "OK") {
+        print("Pagamento realizado com sucesso!");
+
+        // Dar baixa (aguardando lucas com a URL...)
+
+        // Mandar pra próxima tela (resumo com convenio
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+            const PagamentoOkSemConveio(),
+          ),
+        );
+      }
+    }
   }
 
   // @override
